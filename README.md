@@ -21,6 +21,12 @@ A warm, editorial theme for [Obsidian](https://obsidian.md), based on the design
 | --- | --- |
 | ![Forest variant](images/forest.png) | ![Dark mode](images/dark.png) |
 
+## Video
+
+A 30-second tour of the theme: the warm paper, the headings, and the bullet journal signifiers you make your own.
+
+[![Watch the Suliworld tour on YouTube](images/video.jpg)](https://youtu.be/PxiX_KplFyw)
+
 ## Bullet journal signifiers
 
 The character between a task's brackets picks the symbol shown in place of the checkbox:
