@@ -92,6 +92,20 @@ settings:
                 label: Never
                 value: sw-cards-never
     -
+        id: sw-folders
+        title: Folder colors
+        description: Top-level folders take the theme tints in turn (a colored mark and a tinted guide line); a snippet can set them by folder name
+        type: class-select
+        allowEmpty: false
+        default: sw-folders-auto
+        options:
+            -
+                label: Automatic
+                value: sw-folders-auto
+            -
+                label: Off
+                value: sw-folders-off
+    -
         id: sw-link-icon
         title: External link icon
         type: class-select
@@ -443,7 +457,7 @@ body.theme-dark.sw-df-e {
     --text-accent-hover: var(--sw-green);
     --text-on-accent: #ffffff;
     --text-selection: rgba(255, 106, 61, 0.2);
-    --text-highlight-bg: var(--sw-tint-yellow);
+    --text-highlight-bg: #FFDD6E;
 
     --interactive-normal: var(--sw-surface);
     --interactive-hover: var(--sw-bg-2);
@@ -469,6 +483,15 @@ body.theme-dark.sw-df-e {
 
     --color-orange: var(--sw-orange);
     --color-green: #3f8a62;
+
+    /* Folder colors (mid tones that read on the white sidebar) */
+    --sw-fc-mint: #2E8B5E;
+    --sw-fc-lavender: #6E5CD6;
+    --sw-fc-orange: #E0522A;
+    --sw-fc-blue: #2F6FE0;
+    --sw-fc-yellow: #C08F00;
+    --sw-fc-forest: #1F3B2D;
+    --sw-fc-grey: #8B8170;
 }
 
 /* ---------- Dark: Night cards ---------- */
@@ -527,7 +550,7 @@ body.theme-dark.sw-df-e {
     --text-accent-hover: var(--sw-text);
     --text-on-accent: #ffffff;
     --text-selection: rgba(255, 138, 99, 0.25);
-    --text-highlight-bg: var(--sw-tint-yellow);
+    --text-highlight-bg: #6B5516;
 
     --interactive-normal: var(--sw-border);
     --interactive-hover: var(--sw-border-strong);
@@ -553,6 +576,14 @@ body.theme-dark.sw-df-e {
 
     --color-orange: var(--sw-accent-soft);
     --color-green: #8fcfaa;
+
+    --sw-fc-mint: #8FCFAA;
+    --sw-fc-lavender: #B7A8FF;
+    --sw-fc-orange: #FF8A63;
+    --sw-fc-blue: #8DB5FF;
+    --sw-fc-yellow: #F2D16B;
+    --sw-fc-forest: #8FCFAA;
+    --sw-fc-grey: #ADA595;
 }
 
 /* Green checkboxes vanish on the dark surfaces */
@@ -1120,10 +1151,32 @@ body:not(.sw-plain-embeds) .internal-embed.markdown-embed .markdown-embed-title 
     color: var(--sw-text);
 }
 
+/* Highlights as pills, with room around the text; each wrapped line gets its own pill */
 .markdown-rendered mark,
 .markdown-source-view.mod-cm6 .cm-highlight {
-    border-radius: 4px;
+    padding: 0.06em 0.42em;
+    border-radius: var(--sw-pill);
     color: var(--sw-text);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+/* Live Preview splits a highlight into several spans (bold or italic inside, the ==
+   markers while editing), sometimes with a hidden marker widget between them
+   (buffer img + contenteditable span + buffer img): only the outer ends of the run
+   are rounded and padded */
+.markdown-source-view.mod-cm6 .cm-highlight:has(+ .cm-highlight),
+.markdown-source-view.mod-cm6 .cm-highlight:has(+ .cm-widgetBuffer + [contenteditable="false"] + .cm-widgetBuffer + .cm-highlight) {
+    padding-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.markdown-source-view.mod-cm6 .cm-highlight + .cm-highlight,
+.markdown-source-view.mod-cm6 .cm-highlight + .cm-widgetBuffer + [contenteditable="false"] + .cm-widgetBuffer + .cm-highlight {
+    padding-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 /* ---------- Images ---------- */
@@ -1200,6 +1253,39 @@ body:not(.is-grabbing) .nav-folder-title:hover {
 .tree-item-self.is-active .tree-item-icon,
 .nav-file-title.is-active .nav-file-tag {
     color: var(--sw-nav-active-fg);
+}
+
+/* Folder colors: a colored mark before each folder name and a tinted guide line.
+   Low specificity (:where) so a snippet can set --sw-folder-color by name, e.g.
+   .nav-folder:has(> .nav-folder-title[data-path="Projects"]) { --sw-folder-color: var(--sw-fc-orange); --sw-folder-mark: ""; } */
+:where(body:not(.sw-folders-off) .nav-files-container > div) > .nav-folder {
+    --sw-folder-mark: "";
+}
+
+:where(body:not(.sw-folders-off) .nav-files-container > div) > .nav-folder:nth-child(5n + 1 of .nav-folder) { --sw-folder-color: var(--sw-fc-mint); }
+:where(body:not(.sw-folders-off) .nav-files-container > div) > .nav-folder:nth-child(5n + 2 of .nav-folder) { --sw-folder-color: var(--sw-fc-lavender); }
+:where(body:not(.sw-folders-off) .nav-files-container > div) > .nav-folder:nth-child(5n + 3 of .nav-folder) { --sw-folder-color: var(--sw-fc-orange); }
+:where(body:not(.sw-folders-off) .nav-files-container > div) > .nav-folder:nth-child(5n + 4 of .nav-folder) { --sw-folder-color: var(--sw-fc-blue); }
+:where(body:not(.sw-folders-off) .nav-files-container > div) > .nav-folder:nth-child(5n + 5 of .nav-folder) { --sw-folder-color: var(--sw-fc-yellow); }
+
+.nav-files-container .nav-folder-title-content::before {
+    content: var(--sw-folder-mark, none);
+    display: inline-block;
+    width: 0.62em;
+    height: 0.62em;
+    margin-right: 0.5em;
+    border-radius: 0.2em;
+    background: var(--sw-folder-color, transparent);
+    vertical-align: 0.02em;
+}
+
+/* Subfolders keep their parent's color, lighter */
+.nav-files-container .nav-folder .nav-folder .nav-folder-title-content::before {
+    opacity: 0.5;
+}
+
+.nav-files-container .nav-folder > .tree-item-children {
+    border-inline-start-color: color-mix(in srgb, var(--sw-folder-color, var(--nav-indentation-guide-color)) 45%, transparent);
 }
 
 /* Outline = site "On this page" */
@@ -1398,6 +1484,13 @@ body.theme-light.sw-light-forest :is(.workspace-split.mod-sidedock, .workspace-r
     --nav-collapse-icon-color: #8faf9c;
     --nav-collapse-icon-color-collapsed: #8faf9c;
     --nav-indentation-guide-color: rgba(201, 216, 206, 0.18);
+    --sw-fc-mint: #8FCFAA;
+    --sw-fc-lavender: #C9BEFF;
+    --sw-fc-orange: #FF8A63;
+    --sw-fc-blue: #A9C6FF;
+    --sw-fc-yellow: #F2D16B;
+    --sw-fc-forest: #CDEBD9;
+    --sw-fc-grey: #C9D8CE;
     --nav-item-color-selected: var(--sw-on-green);
     --nav-item-background-selected: rgba(255, 138, 99, 0.22);
     --nav-item-color-highlighted: var(--sw-accent-soft);
