@@ -2,6 +2,8 @@
 
 A warm, editorial theme for [Obsidian](https://obsidian.md), based on the design of [suliworld.com](https://www.suliworld.com): cream paper, forest green, a touch of orange, and serif accents.
 
+The theme draws bullet journal signifiers for your tasks. Its optional companion plugin, [Suliworld Signifiers](https://github.com/sulistef/obsidian-suliworld-signifiers), makes them interactive: a menu to pick the signifier, suggestions as you type, and more (see [Bullet journal signifiers](#bullet-journal-signifiers)).
+
 ![Suliworld, light mode (Cream)](images/cream.png)
 
 ## Features
@@ -15,7 +17,7 @@ A warm, editorial theme for [Obsidian](https://obsidian.md), based on the design
 - **Peach blockquotes** in the display serif, **dark code blocks** in iA Writer Duo, and embedded notes shown as a dark green card.
 - **Pill highlights.** `==Highlighted text==` sits in a rounded pill with room around the words, in a warm yellow (deep ochre in dark mode). A highlight that wraps gets one pill per line.
 - **Folder colors.** Each folder in the file explorer gets a colored mark and a tinted guide line, automatically or by folder name (see below).
-- **Bullet journal signifiers** for tasks (see below).
+- **Bullet journal signifiers** for tasks, with symbols and colors you choose, and an optional companion plugin for a picker menu (see below).
 - **Five font pairings**, all bundled: no network access is needed.
 - **Mobile-friendly.** Heading sizes scale down on phones.
 
@@ -43,7 +45,22 @@ The character between a task's brackets picks the symbol shown in place of the c
 | `- [<]` | Scheduled | ‹ |
 | `- [!]` | Important | ! on a peach disc |
 
-Events and notes aren't clickable, so a stray click can't turn them back into tasks. Any other character keeps Obsidian's standard checkbox.
+Any other character keeps Obsidian's standard checkbox. Symbols, colors, and size are set in Style Settings.
+
+### Companion plugin: Suliworld Signifiers
+
+The theme works on its own: it draws the signifiers, and you type the character between the brackets. The free companion plugin [Suliworld Signifiers](https://github.com/sulistef/obsidian-suliworld-signifiers) adds the interactions a theme can't provide, because themes are CSS only:
+
+| | Theme alone | Theme + plugin |
+| --- | --- | --- |
+| Signifiers drawn in your notes | ✓ | ✓ (drawn by the theme, with your Style Settings) |
+| Click a signifier | Toggles tasks; events and notes aren't clickable | Marks any signifier done or not done |
+| Right-click or long-press | — | A menu to pick the signifier, or go back to a plain bullet |
+| Typing `- [` | — | Suggests the signifiers |
+| Enter at the end of an event or a note | Starts a new task | Starts a new event or note |
+| Commands and hotkeys | — | Set, cycle, or remove the signifier of selected lines |
+
+Install it from its [latest release](https://github.com/sulistef/obsidian-suliworld-signifiers/releases/latest) until it's listed in Obsidian's community plugins. The plugin also works with other themes: it then draws the signifiers itself.
 
 ## Folder colors
 
@@ -101,6 +118,11 @@ The script embeds the fonts from `fonts/` as base64, because Obsidian themes can
 Bump `version` in `manifest.json`, rebuild, commit, then push a tag with the same version (for example `1.0.1`). The release workflow attaches `manifest.json` and `theme.css` to a GitHub release.
 
 ## Changelog
+
+### 1.0.2
+
+- Renaming a file or folder in the file explorer shows a readable text field in every variant (the name was white on the field or on the yellow flash).
+- With the Suliworld Signifiers companion plugin, every signifier is clickable (click to mark done, right-click or long-press for the menu). The README explains what the theme does alone and what the plugin adds.
 
 ### 1.0.1
 
