@@ -122,6 +122,12 @@ settings:
                 label: Obsidian default
                 value: sw-link-native
     -
+        id: sw-h1-rule
+        title: H1 divider
+        description: Show a thin line below level 1 headings in reading view and Live Preview
+        type: class-toggle
+        default: false
+    -
         id: sw-dropcap
         title: Drop cap
         description: First letter of the note in the display font, in reading view
@@ -139,125 +145,6 @@ settings:
         description: Replaces the dark green card around embedded notes with a neutral frame
         type: class-toggle
         default: false
-    -
-        id: sw-bujo-heading
-        title: Bullet journal signifiers
-        type: heading
-        level: 2
-        collapsed: true
-    -
-        id: sw-bujo
-        title: Enable bullet journal signifiers
-        description: "Replaces the task checkbox based on the character between the brackets: [ ] task, [x] done, [*] event, [n] note, [>] migrated, [<] scheduled, [!] important. Events and notes aren't clickable."
-        type: class-toggle
-        default: true
-    -
-        id: sw-bujo-size
-        title: Signifier size
-        type: variable-number-slider
-        default: 1.1
-        min: 0.7
-        max: 1.6
-        step: 0.05
-        format: em
-    -
-        id: sw-bujo-todo-glyph
-        title: "[ ] Task — symbol"
-        type: variable-text
-        default: •
-        quotes: true
-    -
-        id: sw-bujo-todo-color
-        title: "[ ] Task — color"
-        type: variable-themed-color
-        format: hex
-        opacity: false
-        default-light: '#1B1A17'
-        default-dark: '#F4EFE6'
-    -
-        id: sw-bujo-done-glyph
-        title: "[x] Done — symbol"
-        type: variable-text
-        default: ×
-        quotes: true
-    -
-        id: sw-bujo-done-color
-        title: "[x] Done — color"
-        type: variable-themed-color
-        format: hex
-        opacity: false
-        default-light: '#8B8170'
-        default-dark: '#8E8676'
-    -
-        id: sw-bujo-event-glyph
-        title: "[*] Event — symbol"
-        type: variable-text
-        default: ✱
-        quotes: true
-    -
-        id: sw-bujo-event-color
-        title: "[*] Event — color"
-        type: variable-themed-color
-        format: hex
-        opacity: false
-        default-light: '#E0522A'
-        default-dark: '#FF8A63'
-    -
-        id: sw-bujo-note-glyph
-        title: "[n] Note — symbol"
-        type: variable-text
-        default: ■
-        quotes: true
-    -
-        id: sw-bujo-note-color
-        title: "[n] Note — color"
-        type: variable-themed-color
-        format: hex
-        opacity: false
-        default-light: '#1F3B2D'
-        default-dark: '#8FCFAA'
-    -
-        id: sw-bujo-migrated-glyph
-        title: "[>] Migrated — symbol"
-        type: variable-text
-        default: ›
-        quotes: true
-    -
-        id: sw-bujo-migrated-color
-        title: "[>] Migrated — color"
-        type: variable-themed-color
-        format: hex
-        opacity: false
-        default-light: '#8B8170'
-        default-dark: '#ADA595'
-    -
-        id: sw-bujo-scheduled-glyph
-        title: "[<] Scheduled — symbol"
-        type: variable-text
-        default: ‹
-        quotes: true
-    -
-        id: sw-bujo-scheduled-color
-        title: "[<] Scheduled — color"
-        type: variable-themed-color
-        format: hex
-        opacity: false
-        default-light: '#8B8170'
-        default-dark: '#ADA595'
-    -
-        id: sw-bujo-important-glyph
-        title: "[!] Important — symbol"
-        type: variable-text
-        default: "!"
-        quotes: true
-    -
-        id: sw-bujo-important-color
-        title: "[!] Important — color"
-        type: variable-themed-color
-        format: hex
-        opacity: false
-        default-light: '#712B13'
-        default-dark: '#FFE0C7'
 */
 
 /* =========================================================
@@ -667,7 +554,7 @@ body.is-frameless .view-content * {
 
 /* ---------- Headings ----------
    Each level gets its own signature from the site:
-   h1 large light title over a hairline, h2 orange logo-mark,
+   h1 large light title with an optional hairline, h2 orange logo-mark,
    h3 forest green, h4 peach chip, h5 accent with a dash, h6 eyebrow. */
 .inline-title,
 .markdown-rendered h1,
@@ -678,6 +565,12 @@ body.is-frameless .view-content * {
 
 .markdown-rendered h1,
 .markdown-source-view.mod-cm6 .HyperMD-header-1 {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+body.sw-h1-rule .markdown-rendered h1,
+body.sw-h1-rule .markdown-source-view.mod-cm6 .HyperMD-header-1 {
     padding-bottom: 0.3em;
     border-bottom: 1px solid var(--sw-border-strong);
 }
@@ -738,7 +631,7 @@ body.is-frameless .view-content * {
 }
 
 /* Inside the green embed card, keep the markers but on-green colors */
-body:not(.sw-plain-embeds) .internal-embed.markdown-embed :is(h1, .HyperMD-header-1) {
+body.sw-h1-rule:not(.sw-plain-embeds) .internal-embed.markdown-embed :is(h1, .HyperMD-header-1) {
     border-bottom-color: var(--sw-green-2);
 }
 
@@ -939,117 +832,6 @@ body .callout .callout-content {
 .markdown-source-view.mod-cm6 .cm-inline-code {
     border-radius: var(--radius-s);
     font-size: 0.85em;
-}
-
-/* ---------- Bullet journal signifiers ----------
-   The character between the brackets picks the symbol:
-   [ ] task, [x] done, [*] event, [n] note, [>] migrated, [<] scheduled,
-   [!] important (an unchecked task has data-task="" in reading view).
-   Symbols and colors come from Style Settings. Reading view
-   puts data-task on the <li> (checkbox is a direct child, or inside <p> in
-   loose lists); Live Preview puts it on the .HyperMD-task-line. */
-body.sw-bujo :is(li, .HyperMD-task-line):is([data-task=""], [data-task=" "]) {
-    --sw-bujo-glyph: var(--sw-bujo-todo-glyph, "•");
-    --sw-bujo-color: var(--sw-bujo-todo-color, var(--sw-text));
-}
-
-body.sw-bujo :is(li, .HyperMD-task-line):is([data-task="x"], [data-task="X"]) {
-    --sw-bujo-glyph: var(--sw-bujo-done-glyph, "×");
-    --sw-bujo-color: var(--sw-bujo-done-color, var(--sw-subtle));
-}
-
-body.sw-bujo :is(li, .HyperMD-task-line)[data-task="*"] {
-    --sw-bujo-glyph: var(--sw-bujo-event-glyph, "✱");
-    --sw-bujo-color: var(--sw-bujo-event-color, var(--sw-accent));
-}
-
-body.sw-bujo :is(li, .HyperMD-task-line)[data-task="n"] {
-    --sw-bujo-glyph: var(--sw-bujo-note-glyph, "■");
-    --sw-bujo-color: var(--sw-bujo-note-color, var(--sw-heading-green));
-}
-
-body.sw-bujo :is(li, .HyperMD-task-line)[data-task=">"] {
-    --sw-bujo-glyph: var(--sw-bujo-migrated-glyph, "›");
-    --sw-bujo-color: var(--sw-bujo-migrated-color, var(--sw-subtle));
-}
-
-body.sw-bujo :is(li, .HyperMD-task-line)[data-task="<"] {
-    --sw-bujo-glyph: var(--sw-bujo-scheduled-glyph, "‹");
-    --sw-bujo-color: var(--sw-bujo-scheduled-color, var(--sw-subtle));
-}
-
-body.sw-bujo :is(li, .HyperMD-task-line)[data-task="!"] {
-    --sw-bujo-glyph: var(--sw-bujo-important-glyph, "!");
-    --sw-bujo-color: var(--sw-bujo-important-color, var(--sw-ink-peach));
-}
-
-body.sw-bujo li:is([data-task=""], [data-task=" "], [data-task="x"], [data-task="X"], [data-task="*"], [data-task="n"], [data-task=">"], [data-task="<"], [data-task="!"]) > input.task-list-item-checkbox,
-body.sw-bujo li:is([data-task=""], [data-task=" "], [data-task="x"], [data-task="X"], [data-task="*"], [data-task="n"], [data-task=">"], [data-task="<"], [data-task="!"]) > p > input.task-list-item-checkbox,
-body.sw-bujo .HyperMD-task-line:is([data-task=""], [data-task=" "], [data-task="x"], [data-task="X"], [data-task="*"], [data-task="n"], [data-task=">"], [data-task="<"], [data-task="!"]) .task-list-item-checkbox {
-    position: relative;
-    border: 0;
-    border-radius: 0;
-    background: none;
-    box-shadow: none;
-    font-size: inherit;
-}
-
-body.sw-bujo li:is([data-task=""], [data-task=" "], [data-task="x"], [data-task="X"], [data-task="*"], [data-task="n"], [data-task=">"], [data-task="<"], [data-task="!"]) > input.task-list-item-checkbox::after,
-body.sw-bujo li:is([data-task=""], [data-task=" "], [data-task="x"], [data-task="X"], [data-task="*"], [data-task="n"], [data-task=">"], [data-task="<"], [data-task="!"]) > p > input.task-list-item-checkbox::after,
-body.sw-bujo .HyperMD-task-line:is([data-task=""], [data-task=" "], [data-task="x"], [data-task="X"], [data-task="*"], [data-task="n"], [data-task=">"], [data-task="<"], [data-task="!"]) .task-list-item-checkbox::after {
-    content: var(--sw-bujo-glyph);
-    position: absolute;
-    inset: 0;
-    top: 0;
-    width: auto;
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    -webkit-mask-image: none;
-    mask-image: none;
-    background: none;
-    font-family: var(--font-text);
-    font-size: var(--sw-bujo-size, 1.1em);
-    font-weight: 700;
-    font-style: normal;
-    line-height: 1;
-    color: var(--sw-bujo-color);
-}
-
-/* Important: the symbol sits on a small peach disc */
-body.sw-bujo li[data-task="!"] > input.task-list-item-checkbox::after,
-body.sw-bujo li[data-task="!"] > p > input.task-list-item-checkbox::after,
-body.sw-bujo .HyperMD-task-line[data-task="!"] .task-list-item-checkbox::after {
-    border-radius: 50%;
-    background: var(--sw-tint-peach);
-    font-size: calc(var(--sw-bujo-size, 1.1em) * 0.75);
-}
-
-body.sw-bujo :is(li, .HyperMD-task-line):is([data-task=""], [data-task=" "], [data-task="x"], [data-task="X"], [data-task="*"], [data-task="n"], [data-task=">"], [data-task="<"], [data-task="!"]) .task-list-item-checkbox:hover::after {
-    opacity: 0.7;
-}
-
-/* Events and notes aren't tasks: a click would turn them back into [ ].
-   With the Suliworld Signifiers plugin, a click marks done and a right-click or
-   long-press opens the signifier menu, so every signifier stays clickable. */
-body.sw-bujo:not(.sw-signifiers-plugin) li:is([data-task="*"], [data-task="n"]) > input.task-list-item-checkbox,
-body.sw-bujo:not(.sw-signifiers-plugin) li:is([data-task="*"], [data-task="n"]) > p > input.task-list-item-checkbox,
-body.sw-bujo:not(.sw-signifiers-plugin) .HyperMD-task-line:is([data-task="*"], [data-task="n"]) .task-list-item-checkbox {
-    pointer-events: none;
-}
-
-/* Only [x] reads as done; the other signifiers keep normal text */
-body.sw-bujo .markdown-rendered li:is([data-task="*"], [data-task="n"], [data-task="!"]),
-body.sw-bujo .markdown-source-view.mod-cm6 .HyperMD-task-line:is([data-task="*"], [data-task="n"], [data-task="!"]) {
-    color: var(--text-normal);
-    text-decoration: none;
-}
-
-body.sw-bujo .markdown-rendered li:is([data-task=">"], [data-task="<"]),
-body.sw-bujo .markdown-source-view.mod-cm6 .HyperMD-task-line:is([data-task=">"], [data-task="<"]) {
-    color: var(--text-muted);
-    text-decoration: none;
 }
 
 /* ---------- Tags ---------- */

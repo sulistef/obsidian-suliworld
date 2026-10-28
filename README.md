@@ -5,7 +5,7 @@ A warm, editorial theme for [Obsidian](https://obsidian.md), based on the design
 > [!TIP]
 > **Companion plugin: [Suliworld Signifiers](https://github.com/sulistef/obsidian-suliworld-signifiers)**
 >
-> The theme draws bullet journal signifiers for your tasks. The optional plugin makes them interactive: click any signifier to mark it done, right-click or long-press to pick one from a menu, and get suggestions as you type `- [`. See [what the plugin adds](#companion-plugin-suliworld-signifiers).
+> The theme handles the overall appearance. The companion plugin defines, draws and manages bullet journal signifiers, including their symbols, colors, size and interactions. Configure them in Settings → Suliworld Signifiers.
 
 ![Suliworld, light mode (Cream)](images/cream.png)
 
@@ -13,14 +13,13 @@ A warm, editorial theme for [Obsidian](https://obsidian.md), based on the design
 
 - **Two light variants.** *Cream* (white sidebars, pill tabs) and *Forest* (deep green ribbon and sidebars, orange-underlined tabs).
 - **Dark mode with floating cards.** Rounded panes float on a near-black canvas (desktop only).
-- **Editorial headings.** Each level has its own look: a large light H1 over a hairline, an orange mark before H2, forest green H3, a peach chip for H4, an orange dash for H5, and small caps for H6.
+- **Editorial headings.** Each level has its own look: a large light H1 with an optional divider, an orange mark before H2, forest green H3, a peach chip for H4, an orange dash for H5, and small caps for H6.
 - **Accent titles.** Italic text inside a heading is set in the display serif, in orange:
   `# Slow software. *Why patience ships better apps*`
 - **Tinted callouts.** Note in blue, tip in mint, warning in peach, question in lavender, quote in yellow.
 - **Peach blockquotes** in the display serif, **dark code blocks** in iA Writer Duo, and embedded notes shown as a dark green card.
 - **Pill highlights.** `==Highlighted text==` sits in a rounded pill with room around the words, in a warm yellow (deep ochre in dark mode). A highlight that wraps gets one pill per line.
 - **Folder colors.** Each folder in the file explorer gets a colored mark and a tinted guide line, automatically or by folder name (see below).
-- **Bullet journal signifiers** for tasks, with symbols and colors you choose, and an optional companion plugin for a picker menu (see below).
 - **Five font pairings**, all bundled: no network access is needed.
 - **Mobile-friendly.** Heading sizes scale down on phones.
 
@@ -30,40 +29,25 @@ A warm, editorial theme for [Obsidian](https://obsidian.md), based on the design
 
 ## Video
 
-A 30-second tour of the theme: the warm paper, the headings, and the bullet journal signifiers you make your own.
+A tour of Cream, Forest and Night: warm paper, editorial headings, bundled fonts and note styles.
 
-[![Watch the Suliworld tour on YouTube](images/video.jpg)](https://youtu.be/PxiX_KplFyw)
+[![Watch Suliworld: A Warm, Editorial Theme for Obsidian on YouTube](images/video.jpg)](https://www.youtube.com/watch?v=1fKEe4P7Bpg)
 
-## Bullet journal signifiers
+## Installation
 
-The character between a task's brackets picks the symbol shown in place of the checkbox:
+1. In Obsidian, open **Settings → Appearance → Themes → Manage**.
+2. Search for **Suliworld** and select **Install and use**.
+3. For the optional appearance controls, install [Style Settings](https://github.com/mgmeyers/obsidian-style-settings) and open its **Suliworld** section.
 
-| Markdown | Meaning | Default symbol |
-| --- | --- | --- |
-| `- [ ]` | Task | • |
-| `- [x]` | Done | × (struck through) |
-| `- [*]` | Event | ✱ orange |
-| `- [n]` | Note | ■ forest green |
-| `- [>]` | Migrated | › |
-| `- [<]` | Scheduled | ‹ |
-| `- [!]` | Important | ! on a peach disc |
+For manual installation, download `theme.css` and `manifest.json` from the [latest release](https://github.com/sulistef/obsidian-suliworld/releases/latest), place them in `.obsidian/themes/Suliworld/` inside your vault, and select Suliworld in Appearance.
 
-Any other character keeps Obsidian's standard checkbox. Symbols, colors, and size are set in Style Settings.
+## Companion plugin: Suliworld Signifiers
 
-### Companion plugin: Suliworld Signifiers
+[Suliworld Signifiers](https://github.com/sulistef/obsidian-suliworld-signifiers) defines and draws bullet journal signifiers and manages their interactions. Install it from **Settings → Community plugins → Browse**, then search for **Suliworld Signifiers**. [Watch the plugin video](https://www.youtube.com/watch?v=4Ah9uRSWrIY).
 
-The theme works on its own: it draws the signifiers, and you type the character between the brackets. The free companion plugin [Suliworld Signifiers](https://github.com/sulistef/obsidian-suliworld-signifiers) adds the interactions a theme can't provide, because themes are CSS only:
+Configure the Markdown characters, names, symbols, light/dark colors and size in **Settings → Suliworld Signifiers**. The plugin also provides the picker menu, suggestions, Enter behavior and commands, and works with any theme.
 
-| | Theme alone | Theme + plugin |
-| --- | --- | --- |
-| Signifiers drawn in your notes | ✓ | ✓ (drawn by the theme, with your Style Settings) |
-| Click a signifier | Toggles tasks; events and notes aren't clickable | Marks any signifier done or not done |
-| Right-click or long-press | — | A menu to pick the signifier, or go back to a plain bullet |
-| Typing `- [` | — | Suggests the signifiers |
-| Enter at the end of an event or a note | Starts a new task | Starts a new event or note |
-| Commands and hotkeys | — | Set, cycle, or remove the signifier of selected lines |
-
-Install it from its [latest release](https://github.com/sulistef/obsidian-suliworld-signifiers/releases/latest) until it's listed in Obsidian's community plugins. The plugin also works with other themes: it then draws the signifiers itself.
+Suliworld handles the overall appearance: fonts, palette, layout and general note styles. It leaves task checkboxes standard when the plugin is disabled. Style Settings remains available for the theme’s general options; signifiers no longer require it. Existing signifier customizations saved by Style Settings are imported once by the updated plugin. Update Suliworld Signifiers to **1.1.0 or later before updating the theme to 1.0.3** so the plugin can import them.
 
 ## Folder colors
 
@@ -96,9 +80,9 @@ Install the [Style Settings](https://github.com/mgmeyers/obsidian-style-settings
 - Floating cards: dark mode only, always, or never
 - Folder colors: automatic or off
 - External link icon: ↗ arrow in the link color, none, or Obsidian's default
+- H1 divider: show a thin line below level 1 headings (off by default)
 - Drop cap in reading view
 - Plain blockquotes and plain embeds
-- Bullet journal signifiers: on/off, size, and a symbol and color for each type
 
 Without Style Settings, the theme uses the defaults listed above.
 
@@ -121,6 +105,11 @@ The script embeds the fonts from `fonts/` as base64, because Obsidian themes can
 Bump `version` in `manifest.json`, rebuild, commit, then push a tag with the same version (for example `1.0.1`). The release workflow attaches `manifest.json` and `theme.css` to a GitHub release.
 
 ## Changelog
+
+### 1.0.3
+
+- Make the H1 divider optional and disabled by default, with a toggle in Style Settings.
+- Move all signifier rendering and configuration to the Suliworld Signifiers plugin. The theme now handles general appearance only.
 
 ### 1.0.2
 
