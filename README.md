@@ -2,7 +2,10 @@
 
 A warm, editorial theme for [Obsidian](https://obsidian.md), based on the design of [suliworld.com](https://www.suliworld.com): cream paper, forest green, a touch of orange, and serif accents.
 
-The theme draws bullet journal signifiers for your tasks. Its optional companion plugin, [Suliworld Signifiers](https://github.com/sulistef/obsidian-suliworld-signifiers), makes them interactive: a menu to pick the signifier, suggestions as you type, and more (see [Bullet journal signifiers](#bullet-journal-signifiers)).
+> [!TIP]
+> **Companion plugin: [Suliworld Signifiers](https://github.com/sulistef/obsidian-suliworld-signifiers)**
+>
+> The theme draws bullet journal signifiers for your tasks. The optional plugin makes them interactive: click any signifier to mark it done, right-click or long-press to pick one from a menu, and get suggestions as you type `- [`. See [what the plugin adds](#companion-plugin-suliworld-signifiers).
 
 ![Suliworld, light mode (Cream)](images/cream.png)
 
